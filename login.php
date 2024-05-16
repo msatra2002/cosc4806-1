@@ -1,30 +1,43 @@
+<?php
+session_start();
+?>
+
 <!DOCTYPE html>
 <html>
-  <head>
+
+<head>
     <title>Login</title>
-  </head>
+    <style>
+        .error {
+            color: red;
+        }
+    </style>
+</head>
 
-  <body>
+<body>
 
-    <h1>Login Form</h1>
+<h1>Login Form</h1>
 
-    <form action = "/validate.php" method = "post">  
-  
-      <label for="username">Username:</label>
-      <br>
-      <input type="text" id="username" name="username">
-      <br>
-      <label for="password">Password:</label>
-      <br>
-      <input type="password" id="password" name="password">
-      <br><br>
-      <input type="submit" value="Submit">
-    </form>
+<?php
+if (isset($_SESSION['failed_attempts']) && $_SESSION['failed_attempts'] > 0) {
+    echo '<p class="error">Unsuccessful attempt number: ' . $_SESSION['failed_attempts'] . '</p>';
+}
+?>
 
+<form action="/validate.php" method="post">  
+    <label for="username">Username:</label>
+    <br>
+    <input type="text" id="username" name="username">
+    <br>
+    <label for="password">Password:</label>
+    <br>
+    <input type="password" id="password" name="password">
+    <br><br>
+    <input type="submit" value="Submit">
+</form>
 
-  </body>
+</body>
 </html>
-
 
 
 

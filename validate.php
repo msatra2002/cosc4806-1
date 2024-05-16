@@ -1,28 +1,32 @@
 <?php
+// Start output buffering
+ob_start();
 
-  session_start();
+session_start();
 
-  $valid_username = "mohamed";
-  $valid_password = "password";
+$valid_username = "mohamed";
+$valid_password = "password";
 
-  $username = $_REQUEST['username'];
-  $_SESSION['username'] = $username;
-  $password = $_REQUEST['password'];
+$username = $_REQUEST['username'];
+$_SESSION['username'] = $username;
+$password = $_REQUEST['password'];
 
-  if($valid_username == $username && $valid_password == $password) {
-    $_SESSION['auhtenticated'] = 1;
-    header ('location: /');
-  } else {
-    
-    if(!isset($_SESSION['failed_attempts'])) {
-      $_SESSION['failed_attempts'] = 1;
+if ($valid_username == $username && $valid_password == $password) {
+    $_SESSION['authenticated'] = 1;
+    header('Location: /');
+    exit();
+} else {
+    if (!isset($_SESSION['failed_attempts'])) {
+        $_SESSION['failed_attempts'] = 1;
     } else {
-      $_SESSION['failed_attempts'] = $_SESSION['failed_attempts'] + 1;
+        $_SESSION['failed_attempts'] = $_SESSION['failed_attempts'] + 1;
     }
 
-    //header... redirect to login.php
-    echo "This is unsuccessfull attempt number: " . $_SESSION['failed_attempts'];
-    
+    // Redirect to login.php
+   header('Location: /login.php');
+   exit();
 }
 
+// End output buffering and flush the buffer
+ob_end_flush();
 ?>
